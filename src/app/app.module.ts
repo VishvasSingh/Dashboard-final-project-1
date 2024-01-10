@@ -1,18 +1,27 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { NgModule } from "@angular/core";
+import { AppComponent } from "./app.component";
+import { NbButtonModule, NbCardModule, NbDatepickerModule, NbDialogModule, NbLayoutModule, NbMenuModule, NbSidebarModule, NbSidebarService, NbThemeModule, NbThemeService, NbWindowModule } from "@nebular/theme";
+import { BrowserModule } from "@angular/platform-browser";
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
-export class AppModule { }
+    declarations: [AppComponent],
+    imports: [
+        NbCardModule,
+        NbThemeModule.forRoot(
+            {name: 'corporate'},
+            
+        ),
+        NbLayoutModule,
+        BrowserModule,
+        NbSidebarModule,
+        NbButtonModule,
+        NbSidebarModule.forRoot(),
+        NbMenuModule.forRoot(),
+        NbDatepickerModule.forRoot(),
+        NbDialogModule.forRoot(),
+        NbWindowModule.forRoot(),
+    ],
+    bootstrap: [AppComponent],
+  })
+  export class AppModule {
+  }
