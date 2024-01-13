@@ -1,0 +1,20 @@
+<div class="page-body">
+    <div class="card-container">
+        <nb-card>
+            <nb-card-header>Login</nb-card-header>
+            <nb-card-body>
+              <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                <label for="email">Email:</label>
+                <input nbInput fullWidth id="email" type="email" placeholder="Enter your email" formControlName="email"/>
+          
+                <label for="password">Password:</label>
+                <input nbInput fullWidth id="password" type="password" placeholder="Enter your password" formControlName="password" />
+          
+                <button nbButton fullWidth status="primary" type="submit">Login</button>
+              </form>
+            </nb-card-body>
+          </nb-card>
+    
+    </div>
+</div>
+
