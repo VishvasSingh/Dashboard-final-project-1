@@ -1,6 +1,6 @@
 <div class="header-container">
   <div class="logo-container">
-    <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+    <a (click)="toggleSidebar()" href="#" class="sidebar-toggle" *ngIf="showSidebar">
       <nb-icon icon="menu-2-outline"></nb-icon>
     </a>
     <a class="logo" href="#" (click)="navigateHome()">Dashboard<span>App</span></a>

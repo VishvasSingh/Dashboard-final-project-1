@@ -1,0 +1,21 @@
+<div class="modal-container">
+  <form (ngSubmit)="onSubmit()">
+  <nb-card>
+    <nb-card-header>Please enter project details</nb-card-header>
+    <nb-card-body>
+      <div>
+        <label for="name">Name:</label>
+        <input nbInput id="name" type="text" name="name" [(ngModel)]="formData.name" required>
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input nbInput id="email" type="email" name="email" [(ngModel)]="formData.email" required>
+      </div>
+    </nb-card-body>
+    <nb-card-footer>
+      <button nbButton status="primary">Submit</button>
+    </nb-card-footer>
+  </nb-card>
+</form>
+
+</div>
