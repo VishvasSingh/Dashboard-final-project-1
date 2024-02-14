@@ -15,7 +15,8 @@ export class ProjectListService {
 
       const request = new HttpRequest('GET', url, {
         headers: new HttpHeaders({
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'mode': 'no-cors'
         }),
       });
       return this.http.request(request);

@@ -1,4 +1,4 @@
 export const API_CONFIG = {
-    baseUrl: 'http://127.0.0.1:5000',
+    baseUrl: 'http://localhost:5002',
     smoke: '/api/smoke'
 }
