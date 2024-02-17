@@ -28,12 +28,14 @@ import { projectReducer } from './pages/data-access/store/project-page/project-p
 import { HttpClientModule } from '@angular/common/http';
 import { SpinnerComponent } from './pages/feature/spinner/spinner.component';
 import { spinnerReducer } from './store/app.reducer';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     NbCardModule,
     AppRoutingModule,
+    BrowserAnimationsModule,
     RouterModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     NbThemeModule.forRoot({ name: 'corporate' }),

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { PagesComponent } from "./pages.component";
 import { ProjectListComponent } from "./project-list/project-list.component";
 import { DataInputComponent } from "./data-input/data-input.component";
+import { ChatbotComponent } from "./chatbot/chatbot.component";
 
 
 const routes: Routes = [
@@ -17,6 +18,10 @@ const routes: Routes = [
       {
         path: 'data-input',
         component: DataInputComponent,
+      },
+      {
+        path: 'chat',
+        component: ChatbotComponent,
       },
     ],
   },
