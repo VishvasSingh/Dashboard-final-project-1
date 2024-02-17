@@ -1,0 +1,15 @@
+services:
+  dashboard-final-project:
+    container_name: dashboard-final-project-container
+    build: .
+    image: dashboard-final-project:v1
+    ports:
+       - 80:80
+    expose:
+       - 80
+    networks:
+      - internalnet
+
+networks:
+  internalnet:
+    driver: bridge
