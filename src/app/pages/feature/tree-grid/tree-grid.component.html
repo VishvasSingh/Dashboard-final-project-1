@@ -38,7 +38,7 @@
       </ng-container>
 
       <ng-container
-        *ngFor="let column of defaultColumns; let index = index"
+        *ngFor="let column of defaultColumns; let index = index let last = last"
         [nbTreeGridColumnDef]="column"
         [showOn]="getShowOn(index)"
       >
@@ -50,8 +50,12 @@
           {{ column }}
         </th>
         <td nbTreeGridCell *nbTreeGridCellDef="let row">
-          {{ row.data[column] || "-" }}
+          <div class="last-column">
+            {{ row.data[column] || "-" }}
+          <span *ngIf="last"><nb-icon icon="trash-2-outline" class="project-icon" (click)="navigate(column)"></nb-icon></span>
+          </div>
         </td>
+        
       </ng-container>
       
     </table>

@@ -1,0 +1,55 @@
+.modal-container {
+    min-width: 45vw;
+    
+}
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-row-center {
+    display: flex;
+    flex-direction: row;
+
+}
+
+.form-input {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5%;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    min-width: calc(100% - 150px);
+
+    input{
+        min-width: 50%;
+    }
+
+    &__date-picker {
+        font-size: small;
+
+    }
+}
+
+.center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    .__header {
+        font-size: x-large;
+    }
+
+    .__footer {
+        min-width: 50%;
+    }
+
+
+
+}

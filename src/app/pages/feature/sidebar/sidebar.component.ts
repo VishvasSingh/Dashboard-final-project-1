@@ -23,13 +23,11 @@ export class SidebarComponent implements OnInit, OnChanges {
   menu: NbMenuItem[] = [];
   constructor(private cdr: ChangeDetectorRef) {}
   ngOnInit(): void {
-    console.log(this.menuItems);
     this.menu = this.menuItems;
   }
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['menuItems']) {
       // Handle changes to menuItems here
-      console.log('Menu items changed:', this.menuItems);
 
       // Manually trigger change detection
       this.cdr.detectChanges();

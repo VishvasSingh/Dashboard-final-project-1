@@ -45,3 +45,9 @@ button[nbTreeGridRowToggle] {
       width: 23%;
     }
   }
+
+  .last-column {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }

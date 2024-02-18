@@ -40,6 +40,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AngularFireModule.initializeApp(environment.firebaseConfig),
     NbThemeModule.forRoot({ name: 'corporate' }),
     NbLayoutModule,
+    NbDatepickerModule.forRoot(),
     BrowserModule,
     NbSidebarModule,
     NbButtonModule,

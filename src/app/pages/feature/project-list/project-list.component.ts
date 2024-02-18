@@ -32,27 +32,31 @@ export class ProjectListComponent implements OnInit {
     private cdr: ChangeDetectorRef
   ) {}
   response: any;
+  projectsData: any[] = []
 
   ngOnInit(): void {
     this.fetchData();
   }
 
   createProject() {
-    console.log('button');
-    this.dialogService.open(CreateProjectModalComponent);
+    const dialogRef = this.dialogService.open(CreateProjectModalComponent);
+    dialogRef.onClose.subscribe(()=>{
+      this.fetchData()
+    })
   }
 
   fetchData() {
     this.store.dispatch(AppActions.showSpinner());
-    console.log("show spinner")
     const subscription$ = this.projectListService
-        .smoke()
+        .getProjectDetails()
         .subscribe(
           (data) => {
             this.response = data;
-            console.log(data)
             if (data?.ok)
             {
+                this.projectsData = this.projectListService.formatProjectDetailsData(data?.body?.data)
+                console.log('formatted the data')
+                this.cdr.detectChanges()
                 this.store.dispatch(AppActions.hideSpinner());
             }
           },

@@ -1,21 +1,46 @@
 <div class="modal-container">
-  <form (ngSubmit)="onSubmit()">
-  <nb-card>
-    <nb-card-header>Please enter project details</nb-card-header>
-    <nb-card-body>
-      <div>
-        <label for="name">Name:</label>
-        <input nbInput id="name" type="text" name="name" [(ngModel)]="formData.name" required>
-      </div>
-      <div>
-        <label for="email">Email:</label>
-        <input nbInput id="email" type="email" name="email" [(ngModel)]="formData.email" required>
-      </div>
-    </nb-card-body>
-    <nb-card-footer>
-      <button nbButton status="primary">Submit</button>
-    </nb-card-footer>
-  </nb-card>
-</form>
+  <form [formGroup]='projectForm' (ngSubmit)="onSubmit()">
+    <nb-card size="medium">
+      <nb-card-header>
+        <div class="center">
+          <div class="__header">Please Enter Project Details</div>
+        </div>
+      </nb-card-header>
 
+      <nb-card-body class="form-container">
+        <div class="form-input">
+          <label for="projectName">Project Name:</label>
+          <div class="input-container">
+            <input nbInput id="projectName" type="text" formControlName="projectName" placeholder="Please enter Project Name" required />
+          </div>
+        </div>
+        <div class="form-input">
+          <label nbLabel for="clientName">Client Name:</label>
+          <div class="input-container">
+            <input nbInput id="clientName" type="text" formControlName="clientName" placeholder="Please enter Client Name" required />
+          </div>
+        </div>
+        <div class="form-input">
+          <label for="date">Date:</label>
+          <div class="input-container">
+            <input
+              nbInput
+              placeholder="Pick Date"
+              formControlName = "date"
+              [nbDatepicker]="datepicker"
+            />
+            <nb-datepicker #datepicker class="date-picker"></nb-datepicker>
+          </div>
+        </div>
+      </nb-card-body>
+
+      <nb-card-footer>
+        <div class="center">
+          <div class="__footer">
+            <button nbButton status="primary" fullWidth [disabled]="!isValid">Submit</button>
+          </div>
+        </div>
+      </nb-card-footer>
+    </nb-card>
+  </form>
 </div>

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { NbCardModule, NbIconModule, NbInputModule, NbSortDirection, NbSortRequest, NbTreeGridDataSource, NbTreeGridDataSourceBuilder, NbTreeGridModule } from '@nebular/theme';
 import { FsIconComponent } from '../fsicon/fs-icon.component';
 import { Router } from '@angular/router';
@@ -15,8 +15,8 @@ interface TreeNode<T> {
 
 interface FSEntry {
   'Project Name' : string;
-  size: string;
-  kind: string;
+  'Date': string;
+  'Client Name': string;
   items?: number;
 }
 
@@ -31,12 +31,13 @@ interface FSEntry {
     NbTreeGridModule,
     CommonModule,
     FsIconComponent,
-    NbIconModule
+    NbIconModule,
   ],
 })
-export class TreeGridComponent implements OnInit, OnDestroy {
+export class TreeGridComponent implements OnInit, OnDestroy, OnChanges {
+  @Input() data: TreeNode<FSEntry>[] = [];
   customColumn = 'Project Name';
-  defaultColumns = ['size', 'kind', 'items'];
+  defaultColumns = ['Date', 'Client Name', 'Status'];
   allColumns = [this.customColumn, ...this.defaultColumns];
 
   dataSource: NbTreeGridDataSource<FSEntry>;
@@ -47,23 +48,30 @@ export class TreeGridComponent implements OnInit, OnDestroy {
   constructor(
     private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private cdr: ChangeDetectorRef
   ) {
     this.dataSource = this.dataSourceBuilder.create(this.data);
   }
 
   ngOnInit(): void {
+    this.dataSource = this.dataSourceBuilder.create(this.data);
+    console.log('tree initizalied')
     console.log(this.dataSource);
   }
 
-  ngOnDestroy(): void {
-    
+  ngOnChanges(changes: SimpleChanges): void {
+    this.dataSource = this.dataSourceBuilder.create(this.data);
+    console.log('tree initizalied');
   }
 
+  ngOnDestroy(): void {}
+
   navigate(row: any) {
+    console.log(row)
     // this.store.dispatch(authActions.login())
-    this.store.dispatch(projectActions.projectOpened())
-    this.router.navigate(['/pages/data-input'])
+    this.store.dispatch(projectActions.projectOpened());
+    this.router.navigate(['/pages/data-input']);
   }
 
   updateSort(sortRequest: NbSortRequest): void {
@@ -78,144 +86,67 @@ export class TreeGridComponent implements OnInit, OnDestroy {
     return NbSortDirection.NONE;
   }
 
-  private data: TreeNode<FSEntry>[] = [
-    {
-      data: {
-        'Project Name': 'Projects',
-        size: '1.8 MB',
-        items: 5,
-        kind: 'dir',
-      },
-    },
-    {
-      data: {
-        'Project Name': 'Reports',
-        kind: 'dir',
-        size: '400 KB',
-        items: 2,
-      },
-      children: [
-        {
-          data: {
-            'Project Name': 'Report 1',
-            kind: 'dir',
-            size: '100 KB',
-            items: 1,
-          },
-          children: [
-            {
-              data: {
-                'Project Name': 'report-1.doc',
-                kind: 'doc',
-                size: '100 KB',
-              },
-            },
-          ],
-        },
-        {
-          data: {
-            'Project Name': 'Report 2',
-            kind: 'dir',
-            size: '300 KB',
-            items: 2,
-          },
-          children: [
-            {
-              data: {
-                'Project Name': 'report-2.doc',
-                kind: 'doc',
-                size: '290 KB',
-              },
-            },
-            {
-              data: {
-                'Project Name': 'report-2-note.txt',
-                kind: 'txt',
-                size: '10 KB',
-              },
-            },
-          ],
-        },
-      ],
-    },
-    // {
-    //   data: { ProjectName: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-    //   children: [
-    //     { data: { ProjectName: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-    //     { data: { ProjectName: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
-    //   ],
-    // },
-    // {
-    //     data: { ProjectName: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-    //     children: [
-    //       { data: { ProjectName: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-    //       { data: { ProjectName: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
-    //     ],
-    //   },
-    //   {
-    //     data: { ProjectName: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-    //     children: [
-    //       { data: { ProjectName: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-    //       { data: { ProjectName: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
-    //     ],
-    //   },
-    //   {
-    //     data: { ProjectName: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-    //     children: [
-    //       { data: { ProjectName: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-    //       { data: { ProjectName: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
-    //     ],
-    //   },
-    //   {
-    //     data: { ProjectName: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-    //     children: [
-    //       { data: { ProjectName: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-    //       { data: { ProjectName: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
-    //     ],
-    //   },
-    //   {
-    //     data: { ProjectName: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-    //     children: [
-    //       { data: { ProjectName: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-    //       { data: { ProjectName: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
-    //     ],
-    //   },
-    //   {
-    //     data: { ProjectName: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-    //     children: [
-    //       { data: { ProjectName: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-    //       { data: { ProjectName: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
-    //     ],
-    //   },
-    //   {
-    //     data: { ProjectName: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-    //     children: [
-    //       { data: { ProjectName: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-    //       { data: { ProjectName: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
-    //     ],
-    //   },
-    //   {
-    //     data: { ProjectName: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-    //     children: [
-    //       { data: { ProjectName: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-    //       { data: { ProjectName: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
-    //     ],
-    //   },
-    //   {
-    //     data: { ProjectName: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-    //     children: [
-    //       { data: { ProjectName: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-    //       { data: { ProjectName: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
-    //     ],
-    //   },
-    //   {
-    //     data: { ProjectName: 'Other', kind: 'dir', size: '109 MB', items: 2 },
-    //     children: [
-    //       { data: { ProjectName: 'backup.bkp', kind: 'bkp', size: '107 MB' } },
-    //       { data: { ProjectName: 'secret-note.txt', kind: 'txt', size: '2 MB' } },
-    //     ],
-    //   },
-  ];
+  // private data: TreeNode<FSEntry>[] = [
+  //   {
+  //     data: {
+  //       'Project Name': 'Projects',
+  //       size: '1.8 MB',
+  //       items: 5,
+  //       kind: 'dir',
+  //     },
+  //   },
+  //   {
+  //     data: {
+  //       'Project Name': 'Reports',
+  //       kind: 'dir',
+  //       size: '400 KB',
+  //       items: 2,
+  //     },
+  //     children: [
+  //       {
+  //         data: {
+  //           'Project Name': 'Report 1',
+  //           kind: 'dir',
+  //           size: '100 KB',
+  //           items: 1,
+  //         },
+  //         children: [
+  //           {
+  //             data: {
+  //               'Project Name': 'report-1.doc',
+  //               kind: 'doc',
+  //               size: '100 KB',
+  //             },
+  //           },
+  //         ],
+  //       },
+  //       {
+  //         data: {
+  //           'Project Name': 'Report 2',
+  //           kind: 'dir',
+  //           size: '300 KB',
+  //           items: 2,
+  //         },
+  //         children: [
+  //           {
+  //             data: {
+  //               'Project Name': 'report-2.doc',
+  //               kind: 'doc',
+  //               size: '290 KB',
+  //             },
+  //           },
+  //           {
+  //             data: {
+  //               'Project Name': 'report-2-note.txt',
+  //               kind: 'txt',
+  //               size: '10 KB',
+  //             },
+  //           },
+  //         ],
+  //       },
+  //     ],
+  //   },
+  // ];
 
   getShowOn(index: number) {
     const minWithForMultipleColumns = 400;

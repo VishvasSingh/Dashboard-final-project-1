@@ -26,7 +26,6 @@ export class PagesComponent implements OnInit {
 
   ngOnInit(): void {
     const menu$ = this.store.pipe(select(projectSelectors.selectProjectState)).subscribe(data=>{
-      console.log('pages -> ', data)
       if (data)
       {
         this.menuItems = [...data.menuItems];
