@@ -52,7 +52,7 @@
         <td nbTreeGridCell *nbTreeGridCellDef="let row">
           <div class="last-column">
             {{ row.data[column] || "-" }}
-          <span *ngIf="last"><nb-icon icon="trash-2-outline" class="project-icon" (click)="navigate(column)"></nb-icon></span>
+          <span *ngIf="last"><nb-icon icon="trash-2-outline" class="project-icon" (click)="deleteProject(row.data)"></nb-icon></span>
           </div>
         </td>
         

@@ -3,5 +3,6 @@ export const API_CONFIG = {
   baseUrl: 'http://127.0.0.1:5000',
   smoke: '/api/smoke',
   projectDetails: '/api/projects',
-  createProject: '/api/create_project'
+  createProject: '/api/create_project',
+  deleteProject: '/api/delete_project'
 };

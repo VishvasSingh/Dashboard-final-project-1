@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import * as authActions from 'src/app/auth/data-access/store/auth.actions';
 import * as projectActions from 'src/app/pages/data-access/store/project-page/project-page.actions'
+import { ProjectListService } from '../project-list/services/project-list-service';
 
 interface TreeNode<T> {
   data: T;
@@ -49,20 +50,18 @@ export class TreeGridComponent implements OnInit, OnDestroy, OnChanges {
     private dataSourceBuilder: NbTreeGridDataSourceBuilder<FSEntry>,
     private router: Router,
     private store: Store,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private projectListService: ProjectListService
   ) {
     this.dataSource = this.dataSourceBuilder.create(this.data);
   }
 
   ngOnInit(): void {
     this.dataSource = this.dataSourceBuilder.create(this.data);
-    console.log('tree initizalied')
-    console.log(this.dataSource);
   }
 
   ngOnChanges(changes: SimpleChanges): void {
     this.dataSource = this.dataSourceBuilder.create(this.data);
-    console.log('tree initizalied');
   }
 
   ngOnDestroy(): void {}
@@ -72,6 +71,15 @@ export class TreeGridComponent implements OnInit, OnDestroy, OnChanges {
     // this.store.dispatch(authActions.login())
     this.store.dispatch(projectActions.projectOpened());
     this.router.navigate(['/pages/data-input']);
+  }
+
+  deleteProject(rowData: any){
+    const delete$ = this.projectListService.deleteProject(rowData['Project Id']).subscribe(
+      (response) => {
+        console.log(response)
+        delete$.unsubscribe()
+      }
+    )
   }
 
   updateSort(sortRequest: NbSortRequest): void {

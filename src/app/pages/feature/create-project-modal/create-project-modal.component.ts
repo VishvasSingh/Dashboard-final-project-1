@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import {
   NbButton,
   NbButtonModule,
@@ -12,7 +18,7 @@ import {
   NbToggleModule,
 } from '@nebular/theme';
 import { select } from '@ngrx/store';
-import { CreateProjectService } from './services/create-project-service';
+import { ProjectListService } from '../project-list/services/project-list-service';
 
 @Component({
   selector: 'app-create-project-modal',
@@ -28,7 +34,7 @@ import { CreateProjectService } from './services/create-project-service';
     NbToggleModule,
     CommonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
 })
 export class CreateProjectModalComponent {
@@ -40,29 +46,28 @@ export class CreateProjectModalComponent {
   projectForm: FormGroup;
   isValid: boolean = false;
 
-  constructor(private fb: FormBuilder, private createProjectService: CreateProjectService, private dialogRef: NbDialogRef<CreateProjectModalComponent>) {
-    this.projectForm = this.fb.group(
-      {
-        projectName: ['', Validators.required],
-        clientName: ['', Validators.required],
-        date: ['', Validators.required]
-      }
-    )
+  constructor(
+    private fb: FormBuilder,
+    private dialogRef: NbDialogRef<CreateProjectModalComponent>,
+    private projectListService: ProjectListService
+  ) {
+    this.projectForm = this.fb.group({
+      projectName: ['', Validators.required],
+      clientName: ['', Validators.required],
+      date: ['', Validators.required],
+    });
 
     this.projectForm.valueChanges.subscribe(() => {
       this.isValid = this.projectForm.valid; // Update flag based on form validity
     });
   }
 
-  
-
   onSubmit() {
-    this.createProjectService.createProject(this.projectForm.value).subscribe(
-      (response) => {
-        console.log(response)
-        this.dialogRef.close()
-      }
-    )
-    
+    this.dialogRef.close();
+    this.projectListService
+      .createProject(this.projectForm.value)
+      .subscribe((response) => {
+        console.log(response);
+      });
   }
 }

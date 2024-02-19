@@ -46,24 +46,16 @@ export class ProjectListComponent implements OnInit {
   }
 
   fetchData() {
-    this.store.dispatch(AppActions.showSpinner());
-    const subscription$ = this.projectListService
-        .getProjectDetails()
-        .subscribe(
-          (data) => {
-            this.response = data;
-            if (data?.ok)
-            {
-                this.projectsData = this.projectListService.formatProjectDetailsData(data?.body?.data)
-                console.log('formatted the data')
-                this.cdr.detectChanges()
-                this.store.dispatch(AppActions.hideSpinner());
-            }
-          },
-          (error) => {
-            console.error(error);
-            this.store.dispatch(AppActions.hideSpinner());
-          }
-        )
-  }
+  const data$ = this.projectListService.fetchData().subscribe(
+    (data) => {
+      if (data)
+      {
+        console.log('got new data')
+        this.projectsData = data
+        this.cdr.detectChanges()
+      }
+    }
+  )
+}
+
 }
