@@ -64,10 +64,12 @@ export class CreateProjectModalComponent {
 
   onSubmit() {
     this.dialogRef.close();
-    this.projectListService
+    const createProject$ = this.projectListService
       .createProject(this.projectForm.value)
-      .subscribe((response) => {
-        console.log(response);
-      });
+      .subscribe((response) =>
+      {
+        createProject$.unsubscribe()
+      }
+      );
   }
 }

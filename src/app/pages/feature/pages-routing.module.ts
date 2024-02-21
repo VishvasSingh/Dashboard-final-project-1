@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { PagesComponent } from "./pages.component";
 import { ProjectListComponent } from "./project-list/project-list.component";
-import { DataInputComponent } from "./data-input/data-input.component";
 import { ChatbotComponent } from "./chatbot/chatbot.component";
 
 
@@ -16,12 +15,15 @@ const routes: Routes = [
         component: ProjectListComponent,
       },
       {
-        path: 'data-input',
-        component: DataInputComponent,
-      },
-      {
         path: 'chat',
         component: ChatbotComponent,
+      },
+      {
+        path: 'project/:projectId',
+        loadChildren: () =>
+          import('./project/feature/project.module').then(
+            (m) => m.ProjectModule
+          ),
       },
     ],
   },

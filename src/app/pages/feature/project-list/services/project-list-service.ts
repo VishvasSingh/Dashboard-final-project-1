@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { API_CONFIG } from 'src/app/config/api.config';
 import * as AppActions from '../../../../store/app.actions';
+import { HttpService } from 'src/app/http/services/http.service';
 
 @Injectable({
   providedIn: 'root',
@@ -11,30 +12,16 @@ import * as AppActions from '../../../../store/app.actions';
 export class ProjectListService {
   projectsData: any;
   projectData$ = new Subject<any>();
-  constructor(private http: HttpClient, private store: Store) {}
+  constructor(private httpService: HttpService, private store: Store) {}
 
   smoke(): Observable<any> {
     const url = `${API_CONFIG.baseUrl}${API_CONFIG.smoke}`;
-
-    const request = new HttpRequest('GET', url, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        mode: 'no-cors',
-      }),
-    });
-    return this.http.request(request);
+    return this.httpService.makeHttpRequest('GET',url)
   }
 
   getProjectDetails(): Observable<any> {
     const url = `${API_CONFIG.baseUrl}${API_CONFIG.projectDetails}`;
-
-    const request = new HttpRequest('GET', url, {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        mode: 'no-cors',
-      }),
-    });
-    return this.http.request(request);
+    return this.httpService.makeHttpRequest('GET', url);
   }
 
   formatProjectDetailsData(data: any[]): any[] {
@@ -56,32 +43,35 @@ export class ProjectListService {
 
   createProjectHttp(data: any): Observable<any> {
     const url = `${API_CONFIG.baseUrl}${API_CONFIG.createProject}`;
-    const request = new HttpRequest('POST', url, {
-      body: data,
-    });
-    return this.http.request(request);
+    const requestBody = {'body': data}
+    return this.httpService.makeHttpRequest('POST', url, data);
   }
 
   deleteProjectHttp(projectId: string): Observable<any> {
     const url = `${API_CONFIG.baseUrl}${API_CONFIG.deleteProject}`;
-    const request = new HttpRequest('DELETE', url, {
-      headers: new HttpHeaders({
+    const options ={'headers': new HttpHeaders({
         projectId: projectId,
-      }),
-    });
-    return this.http.request(request);
+      })}
+    return this.httpService.makeHttpRequest('DELETE', url, undefined, options);
   }
 
   fetchData() {
     this.store.dispatch(AppActions.showSpinner());
     const subscription$ = this.getProjectDetails().subscribe(
-      (data) => {
-        if (data?.ok) {
+      (response) => {
+        if (response && response.status === 200) {
           this.store.dispatch(AppActions.hideSpinner());
-          this.projectsData = this.formatProjectDetailsData(data?.body?.data);
-          this.projectData$.next(this.projectsData);
-          subscription$.unsubscribe();
+          const data = response.body;
+          if (data) {
+            this.projectsData = this.formatProjectDetailsData(data.data);
+            this.projectData$.next(this.projectsData);
+          } else {
+            console.error('Response body is missing or empty');
+          }
+        } else {
+          console.error('Unexpected response status:', response.status);
         }
+        subscription$.unsubscribe();
       },
       (error) => {
         console.error(error);
@@ -95,10 +85,12 @@ export class ProjectListService {
     const create$ = new Subject<any>();
     this.store.dispatch(AppActions.showSpinner());
     const createHttp$ = this.createProjectHttp(data).subscribe((response) => {
+      console.log(response)
       if (response?.ok) {
         this.store.dispatch(AppActions.hideSpinner());
         createHttp$.unsubscribe();
         create$.next(response);
+        create$.complete()
         this.fetchData()
       }
     },

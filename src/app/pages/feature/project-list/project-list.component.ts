@@ -40,17 +40,13 @@ export class ProjectListComponent implements OnInit {
 
   createProject() {
     const dialogRef = this.dialogService.open(CreateProjectModalComponent);
-    dialogRef.onClose.subscribe(()=>{
-      this.fetchData()
-    })
   }
 
   fetchData() {
-  const data$ = this.projectListService.fetchData().subscribe(
+  this.projectListService.fetchData().subscribe(
     (data) => {
       if (data)
       {
-        console.log('got new data')
         this.projectsData = data
         this.cdr.detectChanges()
       }

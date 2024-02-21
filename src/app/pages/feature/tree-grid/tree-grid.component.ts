@@ -68,15 +68,15 @@ export class TreeGridComponent implements OnInit, OnDestroy, OnChanges {
 
   navigate(row: any) {
     console.log(row)
+    const projectId = row?.data['Project Id']
     // this.store.dispatch(authActions.login())
-    this.store.dispatch(projectActions.projectOpened());
-    this.router.navigate(['/pages/data-input']);
+    // this.store.dispatch(projectActions.projectOpened());
+    this.router.navigate(['/pages', 'project', projectId, 'project-dashboard']);
   }
 
   deleteProject(rowData: any){
     const delete$ = this.projectListService.deleteProject(rowData['Project Id']).subscribe(
       (response) => {
-        console.log(response)
         delete$.unsubscribe()
       }
     )
