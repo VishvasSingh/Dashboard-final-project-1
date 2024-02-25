@@ -1,8 +1,31 @@
+<div class="app-data-input"></div>
 <nb-card>
-    <nb-card-header>
+  <nb-card-header> 
+    <div class="app-data-input__title-container">
         Please upload data input file 
-    </nb-card-header>
-    <nb-card-body>
-        hello
-    </nb-card-body>
+    </div>
+</nb-card-header>
+  <nb-card-body>
+    <div class="app-data-input__file-upload-container">
+      <div class="app-data-input__input-container">
+        <label for="upload">
+          <nb-icon icon="plus-square-outline"></nb-icon>
+          Select File
+        </label>
+        <input
+          nbInput
+          type="file"
+          id="upload"
+          (change)="onFileSelected($event)"
+          accept=".xlsx"
+        />
+      </div>
+
+      <div class="app-data-input__button-container">
+        <button nbButton (click)="uploadFile()" [disabled]="!selectedFile">
+          Upload
+        </button>
+      </div>
+    </div>
+  </nb-card-body>
 </nb-card>
