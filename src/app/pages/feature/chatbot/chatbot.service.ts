@@ -11,7 +11,6 @@ export class ChatbotService {
     return new Observable((observer) => {
       const eventSource = new EventSource(url);
       eventSource.onmessage = (event) => {
-        console.log(event)
         observer.next(event.data);
       };
       eventSource.onerror = (error) => {

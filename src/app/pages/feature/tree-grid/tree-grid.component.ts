@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import * as authActions from 'src/app/auth/data-access/store/auth.actions';
 import * as projectActions from 'src/app/pages/data-access/store/project-page/project-page.actions'
 import { ProjectListService } from '../project-list/services/project-list-service';
+import { NavigationService } from 'src/app/utils/services/navigation-service/navigation.service';
 
 interface TreeNode<T> {
   data: T;
@@ -51,7 +52,8 @@ export class TreeGridComponent implements OnInit, OnDestroy, OnChanges {
     private router: Router,
     private store: Store,
     private cdr: ChangeDetectorRef,
-    private projectListService: ProjectListService
+    private projectListService: ProjectListService,
+    private navigationService: NavigationService
   ) {
     this.dataSource = this.dataSourceBuilder.create(this.data);
   }
@@ -67,8 +69,8 @@ export class TreeGridComponent implements OnInit, OnDestroy, OnChanges {
   ngOnDestroy(): void {}
 
   navigate(row: any) {
-    console.log(row)
     const projectId = row?.data['Project Id']
+    this.navigationService.setProjectName(row?.data['Project Name'])
     // this.store.dispatch(authActions.login())
     // this.store.dispatch(projectActions.projectOpened());
     this.router.navigate(['/pages', 'project', projectId, 'project-dashboard']);

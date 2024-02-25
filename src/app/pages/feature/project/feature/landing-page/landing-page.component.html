@@ -1,5 +1,26 @@
-<nb-card>
-    <nb-card-header>
-        Hello
-    </nb-card-header>
-</nb-card>
+<div class="app-project-landing-page">
+  <div class="app-project-landing-page__container">
+    <div class="app-project-landing-page__card-container">
+      <app-navigation-card [icon]="'book-outline'" [text]="'Data Input'" (click)="openDataInput()">
+      </app-navigation-card>
+    </div>
+
+    <div class="app-project-landing-page__card-container">
+      <app-navigation-card [icon]="'pie-chart-outline'" [text]="'Calculations'">
+      </app-navigation-card>
+    </div>
+
+    <div class="app-project-landing-page__card-container">
+      <app-navigation-card [icon]="'at-outline'" [text]="'Comments'">
+      </app-navigation-card>
+    </div>
+
+    <div class="app-project-landing-page__card-container">
+      <app-navigation-card
+        [icon]="'options-2-outline'"
+        [text]="'Project Details'"
+      >
+      </app-navigation-card>
+    </div>
+  </div>
+</div>

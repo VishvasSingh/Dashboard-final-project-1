@@ -33,7 +33,7 @@
             [expanded]="row.expanded"
           ></nb-fs-icon> -->
           <nb-icon icon="layers-outline" class="project-icon" (click)="navigate(row)"></nb-icon>
-          {{ row.data[customColumn] }}
+          {{ row?.data[customColumn] }}
         </td>
       </ng-container>
 
@@ -51,8 +51,8 @@
         </th>
         <td nbTreeGridCell *nbTreeGridCellDef="let row">
           <div class="last-column">
-            {{ row.data[column] || "-" }}
-          <span *ngIf="last"><nb-icon icon="trash-2-outline" class="project-icon" (click)="deleteProject(row.data)"></nb-icon></span>
+            {{ row?.data[column] || "-" }}
+          <span *ngIf="last"><nb-icon icon="trash-2-outline" class="project-icon" (click)="deleteProject(row?.data)"></nb-icon></span>
           </div>
         </td>
         

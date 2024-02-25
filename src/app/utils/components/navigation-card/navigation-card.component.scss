@@ -1,0 +1,25 @@
+.app-navigation-card {
+    &__status-card {
+        display: flex;
+        flex-direction: row;
+        :hover {
+            cursor: pointer;
+        }
+    }
+
+    &__icon-container {
+        padding: 10px;
+        nb-icon {
+            font-size: xx-large;
+        }
+    }
+
+    &__title-container {
+        padding: 15px;
+        font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-weight: 900 !important;
+        font-size: x-large;
+        justify-content: center;
+        align-items: center;
+    }
+}

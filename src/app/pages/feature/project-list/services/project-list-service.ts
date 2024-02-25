@@ -85,7 +85,6 @@ export class ProjectListService {
     const create$ = new Subject<any>();
     this.store.dispatch(AppActions.showSpinner());
     const createHttp$ = this.createProjectHttp(data).subscribe((response) => {
-      console.log(response)
       if (response?.ok) {
         this.store.dispatch(AppActions.hideSpinner());
         createHttp$.unsubscribe();

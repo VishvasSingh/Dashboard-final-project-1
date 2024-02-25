@@ -48,7 +48,6 @@ export class ChatbotComponent implements OnInit {
       .getMessageEvents('http://127.0.0.1:5000/api/stream')
       .subscribe(
         (data) => {
-         console.log(data)
           this.sendMessage({ message: data });
           this.cdr.detectChanges();
           // Handle received data here
