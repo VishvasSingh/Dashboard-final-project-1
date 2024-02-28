@@ -1,9 +1,7 @@
-import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { API_CONFIG } from 'src/app/config/api.config';
-import * as AppActions from '../../../../store/app.actions';
 import { HttpService } from 'src/app/http/services/http.service';
 
 @Injectable({
@@ -12,7 +10,7 @@ import { HttpService } from 'src/app/http/services/http.service';
 export class ProjectListService {
   projectsData: any;
   projectData$ = new Subject<any>();
-  constructor(private httpService: HttpService, private store: Store) {}
+  constructor(private httpService: HttpService) {}
 
   smoke(): Observable<any> {
     const url = `${API_CONFIG.baseUrl}${API_CONFIG.smoke}`;
@@ -56,11 +54,9 @@ export class ProjectListService {
   }
 
   fetchData() {
-    this.store.dispatch(AppActions.showSpinner());
     const subscription$ = this.getProjectDetails().subscribe(
       (response) => {
         if (response && response.status === 200) {
-          this.store.dispatch(AppActions.hideSpinner());
           const data = response.body;
           if (data) {
             this.projectsData = this.formatProjectDetailsData(data.data);
@@ -75,7 +71,6 @@ export class ProjectListService {
       },
       (error) => {
         console.error(error);
-        this.store.dispatch(AppActions.hideSpinner());
       }
     );
     return this.projectData$;
@@ -83,10 +78,8 @@ export class ProjectListService {
 
   createProject(data: any) {
     const create$ = new Subject<any>();
-    this.store.dispatch(AppActions.showSpinner());
     const createHttp$ = this.createProjectHttp(data).subscribe((response) => {
       if (response?.ok) {
-        this.store.dispatch(AppActions.hideSpinner());
         createHttp$.unsubscribe();
         create$.next(response);
         create$.complete()
@@ -95,7 +88,6 @@ export class ProjectListService {
     },
     (error) => {
       console.log(error)
-      this.store.dispatch(AppActions.hideSpinner());
     }
     );
     return create$;
@@ -103,11 +95,9 @@ export class ProjectListService {
 
   deleteProject(projectId: string) {
     const delete$ = new Subject<any>();
-    this.store.dispatch(AppActions.showSpinner());
     const deleteHttp$ = this.deleteProjectHttp(projectId).subscribe(
       (response) => {
         if (response?.ok) {
-          this.store.dispatch(AppActions.hideSpinner());
           deleteHttp$.unsubscribe();
           delete$.next(response);
           this.fetchData();
@@ -115,7 +105,6 @@ export class ProjectListService {
       },
       (error) => {
         console.error(error);
-        this.store.dispatch(AppActions.hideSpinner());
       }
     );
     return delete$;

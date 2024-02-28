@@ -25,10 +25,11 @@ import { ThemeModule } from 'src/@theme/theme.module';
 import { StoreModule } from '@ngrx/store';
 import { authReducer } from './auth/data-access/store/auth.reducer';
 import { projectReducer } from './pages/data-access/store/project-page/project-page.reducer';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { SpinnerComponent } from './pages/feature/spinner/spinner.component';
 import { spinnerReducer } from './store/app.reducer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpInterceptorService } from './http/services/interceptors/http-interceptor.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -56,5 +57,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     SpinnerComponent
   ],
   bootstrap: [AppComponent],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true
+    }
+  ]
 })
 export class AppModule {}

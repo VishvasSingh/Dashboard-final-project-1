@@ -4,5 +4,6 @@ export const API_CONFIG = {
   smoke: '/api/smoke',
   projectDetails: '/api/projects',
   createProject: '/api/create_project',
-  deleteProject: '/api/delete_project'
+  deleteProject: '/api/delete_project',
+  dataInput: '/api/data_input'
 };
