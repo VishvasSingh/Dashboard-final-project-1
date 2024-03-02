@@ -19,8 +19,10 @@ export class DataInputService {
 
   downloadFile() {
     const headers = new HttpHeaders({
-      'Content-Type': 'application/octet-stream',
-      Accept: 'application/octet-stream',
+      'Content-Type':
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      Accept:
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     });
     const url = `${API_CONFIG.baseUrl}${API_CONFIG.downloadDataInput}`;
     return this.http.get( url, {

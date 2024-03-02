@@ -78,7 +78,9 @@ export class DataInputComponent implements OnInit {
   downloadFile(){
     this.dataInputService.downloadFile().subscribe(
         (response:Blob)=> {
-        const blob = new Blob([response], { type: 'application/octet-stream' }); // Adjust MIME type if necessary
+        const blob = new Blob([response], {
+          type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        }); // Adjust MIME type if necessary
 
         // Create a temporary link element and trigger the download
         const link = document.createElement('a');
