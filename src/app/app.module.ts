@@ -11,6 +11,7 @@ import {
   NbSidebarService,
   NbThemeModule,
   NbThemeService,
+  NbToastrModule,
   NbWindowModule,
 } from '@nebular/theme';
 import { BrowserModule } from '@angular/platform-browser';
@@ -45,6 +46,7 @@ import { HttpInterceptorService } from './http/services/interceptors/http-interc
     BrowserModule,
     NbSidebarModule,
     NbButtonModule,
+    NbToastrModule.forRoot(),
     HttpClientModule,
     NbSidebarModule.forRoot(),
     NbMenuModule.forRoot(),

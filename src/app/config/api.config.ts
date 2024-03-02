@@ -5,5 +5,7 @@ export const API_CONFIG = {
   projectDetails: '/api/projects',
   createProject: '/api/create_project',
   deleteProject: '/api/delete_project',
-  dataInput: '/api/data_input'
+  dataInput: '/api/data_input',
+  uploadDataInput: '/api/upload_data_input',
+  downloadDataInput: '/api/download_data_input'
 };

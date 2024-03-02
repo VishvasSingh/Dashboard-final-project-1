@@ -12,6 +12,8 @@ input[type="file"] {
     font-size: 28px;
     letter-spacing: 1.1px;
     color: #222b45;
+    display: flex;
+    justify-content: space-between;
   }
 
   &__file-upload-container {
