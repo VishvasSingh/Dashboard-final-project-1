@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ProjectComponent } from './project.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { DataInputComponent } from './data-input/data-input.component';
+import { CalculationsPage } from './calculations/components/calculations-page/calculations-page.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
       {
         path: 'data-input',
         component: DataInputComponent
+      },
+      {
+        path: 'calculations',
+        component: CalculationsPage
       }
     ],
   },

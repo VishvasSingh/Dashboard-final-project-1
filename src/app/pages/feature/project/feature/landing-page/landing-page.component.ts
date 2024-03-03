@@ -16,4 +16,8 @@ export class LandingPageComponent {
   openDataInput() {
     this.router.navigate(['../data-input'], { relativeTo: this.route });
   }
+
+  openCalculations() {
+    this.router.navigate(['../calculations'], { relativeTo: this.route });
+  }
 }
