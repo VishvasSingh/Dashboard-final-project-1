@@ -31,6 +31,7 @@ import { SpinnerComponent } from './pages/feature/spinner/spinner.component';
 import { spinnerReducer } from './store/app.reducer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpInterceptorService } from './http/services/interceptors/http-interceptor.service';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [AppComponent],
@@ -43,6 +44,9 @@ import { HttpInterceptorService } from './http/services/interceptors/http-interc
     NbThemeModule.forRoot({ name: 'corporate' }),
     NbLayoutModule,
     NbDatepickerModule.forRoot(),
+    NgxEchartsModule.forRoot({
+      echarts: ()=> import('echarts')
+    }),
     BrowserModule,
     NbSidebarModule,
     NbButtonModule,
